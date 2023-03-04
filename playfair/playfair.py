@@ -2,7 +2,8 @@ from pprint import pprint
 
 class Playfair:
 
-    def __init__(self, input_text: str, input_key: str) -> None:
+    def __init__(self, input_text: str, input_key: str, DEBUG: bool = False) -> None:
+        self.DEBUG = DEBUG
         self.text = input_text
         self.ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
         self.key = self.__create_key_matrix(input_key)
@@ -17,18 +18,21 @@ class Playfair:
         fixed_text = self.__fix_text(non_spaced)
 
         encrypted = ''
+        # iterate using pairs of letters
         for (letter1, letter2) in zip(fixed_text[0::2], fixed_text[1::2]):
+            # find indexes of rows and columns for both letters
             r1, c1 = self.__get_index(letter1)
             r2, c2 = self.__get_index(letter2)
 
-            if c1 == c2:
+            if c1 == c2: # letters are in the same column
                 encrypted += self.key[(r1+1)%5][c1] + self.key[(r2+1)%5][c2]
-            elif r1 == r2:
+            elif r1 == r2: # letters are in the same row
                 encrypted += self.key[r1][(c1+1)%5] + self.key[r2][(c2+1)%5]
-            else:
+            else: # letters are in diffetent rows and columns
                 encrypted += self.key[r1][c2] + self.key[r2][c1]
 
-        print(f'\nEncrypted text: {encrypted}\n')
+        if self.DEBUG:
+            print(f'\nEncrypted text: {encrypted}\n')
 
         return encrypted
 
@@ -42,7 +46,9 @@ class Playfair:
         fixed_text = self.__fix_text(non_spaced)
 
         decrypted = ''
+        # iterate using pairs of letters
         for (letter1, letter2) in zip(fixed_text[0::2], fixed_text[1::2]):
+            # find indexes of rows and columns for both letters
             r1, c1 = self.__get_index(letter1)
             r2, c2 = self.__get_index(letter2)
 
@@ -53,7 +59,8 @@ class Playfair:
             else: # letters are in diffetent rows and columns
                 decrypted += self.key[r1][c2] + self.key[r2][c1]
 
-        print(f'\nDecrypted text: {decrypted}\n')
+        if self.DEBUG:
+            print(f'\nDecrypted text: {decrypted}\n')
 
         return decrypted
 
@@ -96,9 +103,9 @@ class Playfair:
                 key_matrix[r][c] = letters[letter_idx]
                 letter_idx += 1
 
-        print('Key matrix:')
-
-        pprint(key_matrix)
+        if self.DEBUG:
+            print('Key matrix:')
+            pprint(key_matrix)
 
         return key_matrix
 

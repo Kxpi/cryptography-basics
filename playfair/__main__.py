@@ -14,26 +14,33 @@ def key_type(key: str) -> str:
     raise argparse.ArgumentTypeError("Key must be shorter than 26 characters and consist only of unique letters!")
 
 
+def custom_usage():
+    """
+    Custom usage message for argparse
+    """
+    return 'playfair [-h] (-e | -d) [-k] [-i]'
+
+
 def parse_args() -> dict:
     """
     Parses arguments from CLI
     """
-    parser = argparse.ArgumentParser(description=argparse.SUPPRESS)
+    parser = argparse.ArgumentParser(description=argparse.SUPPRESS, usage = custom_usage())
 
     # encryption ad decryption are mutually exclusive - only one canm be performed at the time
     group = parser.add_mutually_exclusive_group(required=True)
 
     group.add_argument('-e', '--encrypt', action='store_true', help='Encrypt text from input.')
     group.add_argument('-d', '--decrypt', action='store_true', help='Decrypt text from input.')
-    parser.add_argument('-k', '--key', type=key_type, metavar = "", default='siema', help='Key word used for encryption and decryption of the message. [defaults to: siema]')
-    parser.add_argument('-i', '--input', type=str, metavar = "", help='Input text to encrypt or decrypt.')
+    parser.add_argument('-k', '--key', type=key_type, metavar="", default='siema', help='Key word used for encryption and decryption of the message. [defaults to: siema]')
+    parser.add_argument('-i', '--input', type=str, metavar="", help='Input text to encrypt or decrypt.')
 
     args = vars(parser.parse_args())
 
     return args
 
 
-def main():
+def main() -> None:
     """
     Main function
     """
@@ -49,9 +56,9 @@ def main():
     print(f'\nInput: {args["input"]} \nKey: {args["key"]}\n')
 
     if args['encrypt']:
-        Playfair(args['input'], args['key']).encrypt()
+        Playfair(args['input'], args['key'], DEBUG = True).encrypt()
     else:
-        Playfair(args['input'], args['key']).decrypt()
+        Playfair(args['input'], args['key'], DEBUG = True).decrypt()
 
 
 if __name__ == '__main__':

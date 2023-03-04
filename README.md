@@ -21,7 +21,7 @@ python3 -m playfair --encrypt --input 'message' --key 'key'
 * Usage:
     ```
     $ python3 -m playfair --help
-        usage: __main__.py [-h] (-e | -d) [-k] [-i]
+        usage: playfair [-h] (-e | -d) [-k] [-i]
 
         optional arguments:
           -h, --help     show this help message and exit
@@ -36,11 +36,11 @@ python3 -m playfair --encrypt --input 'message' --key 'key'
     ```
 * Decryption:
     ``` 
-    $ python3 -m playfair --d --input 'lyxaxgda' --key 'key'
+    $ python3 -m playfair --decrypt -i 'lyxaxgda' -k 'key'
     ```
 * Note: only one operation is allowed at a time - encryption or decryption!
     ```
     python3 -m playfair -d -e
-        usage: __main__.py [-h] (-e | -d) [-k] [-i]
+        usage: playfair [-h] (-e | -d) [-k] [-i]
         __main__.py: error: argument -e/--encrypt: not allowed with argument -d/--decrypt
     ```
