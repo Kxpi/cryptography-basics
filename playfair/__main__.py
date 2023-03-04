@@ -14,7 +14,7 @@ def key_type(key: str) -> str:
     raise argparse.ArgumentTypeError("Key must be shorter than 26 characters and consist only of unique letters!")
 
 
-def custom_usage():
+def custom_usage() -> str:
     """
     Custom usage message for argparse
     """
