@@ -118,7 +118,7 @@ class Playfair:
         return non_spaced_text
 
 
-    def __fix_text(self, text) -> str:
+    def __fix_text(self, text: str) -> str:
         """
         Fixes same letters next ot each others, adds x if lentgh of string is odd
         """
