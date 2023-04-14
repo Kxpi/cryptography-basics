@@ -63,9 +63,13 @@ def main() -> None:
     # change input to lower case
     args['input'] = args['input'].lower()
 
+    # create instance of RSA class
     rsa = RSA(args['p'], args['q'])
 
+    # list info about generated values
     rsa.info()
+    
+    # encrypt and decrypt
     rsa.work(args['input'])
 
 

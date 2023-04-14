@@ -11,6 +11,9 @@ class RSA:
         
 
     def info(self):
+        """
+        Lists values (phi, n, e, d) generated during initialization
+        """
         print(f'''
         Phi: {self.phi}
 
@@ -24,6 +27,11 @@ class RSA:
 
 
     def work(self, message: str, return_encrypted: bool = True) -> str:
+        """
+        Encrypts and decrypts provided message
+        
+        return_encrypted when set to True, returns result of encryption
+        """
         encrypted_nums = self.__encoder(message)
         encrypted = ''.join(str(p) for p in encrypted_nums)
         decrypted = ''.join(self.__decoder(encrypted_nums))
@@ -62,6 +70,10 @@ class RSA:
 
 
     def __encoder(self, message: str) -> list:
+        """
+        Converts message to list with ascii codes and encrypts them
+        Returns list of encoded values
+        """
         encoded = []
         for letter in message:
             encoded.append(self.__single_encrypt(ord(letter)))
@@ -69,6 +81,10 @@ class RSA:
     
     
     def __decoder(self, encoded: str) -> list:
+        """
+        Converts message to list with ascii codes and decrypts them
+        Returns list of decoded values
+        """
         decoded = []
         for num in encoded:
             decoded.append(chr(self.__single_decrypt(num)))
